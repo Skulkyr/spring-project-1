@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tasks</title>
+</head>
+<body>
+<div>
+    <h1>Task list</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Description</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="task:${taskList}">
+            <td th:text="${task.id}"></td>
+            <td th:text="${task.description}"></td>
+            <td th:text="${task.status}"></td>
+            <td>
+                <form method="post" th:action="@{/delete(id=${task.id})}">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+<hr>
+    <h3>Add new task</h3>
+
+
+        <form action="#" th:action="@{/save}" th:object="${task}" method="post">
+            <div style="display: inline-block">
+                <label>
+                    <input type="text" placeholder="Enter your name" th:field="*{description}">
+                </label>
+
+                <label>
+                    <select name="status" th:field="*{status}">
+                        <option th:each="statusVariant : ${T(com.javarush.pogonin.springproject1.entity.Status).values()}"
+                        th:value="${statusVariant}" th:text="${statusVariant.getStatus()}">
+                    </select>
+                </label>
+
+                <button type="submit">Save</button>
+            </div>
+        </form>
+    </div>
+
+<hr>
+
+
+
+</body>
+</html>
